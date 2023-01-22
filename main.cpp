@@ -1,8 +1,15 @@
-// Your First C++ Program
+#include "Commons.h"
+#include "UrlValidator.h"
 
-#include <iostream>
 
-int main() {
-    std::cout << "Hello World!";
+int main(int argc, char** argv) {
+    if (argc == 2) {
+
+    }
+    else {
+        std::cout << "Invalid input!" << std::endl;
+    }
+    std::cout << std::endl;
+
     return 0;
 }

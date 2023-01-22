@@ -99,9 +99,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Socket.cpp" />
     <ClCompile Include="UrlValidator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Commons.h" />
+    <ClInclude Include="Socket.h" />
+    <ClInclude Include="UrlComponents.h" />
     <ClInclude Include="UrlValidator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
