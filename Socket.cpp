@@ -29,7 +29,7 @@ bool Socket::socket_connect(struct sockaddr_in server)
 {
 
 	if (connect(sock, (struct sockaddr*)&server, sizeof(struct sockaddr_in)) == SOCKET_ERROR) {
-		//std::cout << "Connection error: " << WSAGetLastError() << std::endl;
+		std::cout << "Connection error: " << WSAGetLastError() << std::endl;
 		return false;
 	}
 
