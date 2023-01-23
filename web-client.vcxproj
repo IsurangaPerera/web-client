@@ -97,16 +97,29 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HttpResponseParser.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="UrlValidator.cpp" />
+    <ClCompile Include="WebClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Commons.h" />
+    <ClInclude Include="HTMLParserBase.h" />
+    <ClInclude Include="HttpResponseParser.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="UrlComponents.h" />
     <ClInclude Include="UrlValidator.h" />
+    <ClInclude Include="WebClient.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

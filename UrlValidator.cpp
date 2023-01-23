@@ -49,17 +49,16 @@ std::string getPort(std::string url) {
 }
 
 std::string getPath(std::string url) {
-	std::string path;
-	if (url.size() == 0 || url.at(0) != '/')
-		path = "";
-	else {
+	std::string path = "/";
+	if (url.size() > 0 && url.at(0) == '/')
+	{
 		url = url.substr(1);
 		int path_pos = url.length();
 		int temp = url.find_first_of("?");
 
 		if (temp != 4294967295)
 			path_pos = temp;
-		path = url.substr(0, path_pos);
+		path += url.substr(0, path_pos);
 	}
 
 	return path;
@@ -86,6 +85,7 @@ std::string getPatternSuffix(std::string str, std::string pattern) {
 
 UrlComponents UrlValidator::parseUrl(std::string url) 
 {
+	printf("\t  Parsing URL... ");
 	UrlComponents urlComponents;
 
 	int port;
@@ -111,7 +111,7 @@ UrlComponents UrlValidator::parseUrl(std::string url)
 
 	//exit for incorrect scheme
 	if (scheme.size() > 0 && scheme.compare("http") != 0) {
-		std::cout << "Failed with invalid scheme" << std::endl;
+		std::cout << "failed with invalid scheme" << std::endl;
 		urlComponents.isValid = false;
 		return urlComponents;
 	}
@@ -126,10 +126,10 @@ UrlComponents UrlValidator::parseUrl(std::string url)
 	try {
 		port = std::stoi(str_port);
 		if (port <= 0 || port > 65535)
-			throw std::invalid_argument("Invalid port");
+			throw std::invalid_argument("failed with invalid port");
 	}
 	catch (std::invalid_argument& e) {
-		std::cout << "Failed with invalid port" << std::endl;
+		std::cout << "failed with invalid port" << std::endl;
 		urlComponents.isValid = false;
 		return urlComponents;
 	}
@@ -146,6 +146,7 @@ UrlComponents UrlValidator::parseUrl(std::string url)
 	urlComponents.port = port;
 	urlComponents.path = path;
 	urlComponents.query = query;
+
 
 	return urlComponents;
 }

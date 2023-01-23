@@ -1,4 +1,9 @@
 #pragma once
+
+#define KB(x)   ((size_t) (x) << 10)
+#define MB(x)   ((size_t) (x) << 20)
+
+
 #include <Windows.h>
 #include <stdio.h>
 #include<iostream>
@@ -19,6 +24,7 @@
 #include<conio.h>
 #include<math.h>
 #include <sstream>
+
 
 // using chrono high_resolution_clock
 using namespace std::chrono;
