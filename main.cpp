@@ -7,13 +7,13 @@ int main(int argc, char** argv)
 {
     if (argc != 2) 
     {
-        printf("Incorrect arguments. \nUsage: \n%s %s\nor\n%s <num_threads> <filename.txt>", argv[0], "<url>", argv[0]);
+        printf("Incorrect arguments. \nUsage: \n%s %s\n", argv[0], "<url>");
         return 0;
     }
     
     std::string url(argv[1]);
+    
     WebClient client;
-
     WSADATA wsaData;
 
     //Initialize WinSock; once per program run

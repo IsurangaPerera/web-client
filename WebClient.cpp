@@ -59,7 +59,7 @@ void WebClient::crawl(std::string url)
 	server.sin_port = htons(urlComponents.port);
 
 	printf("\t* Connecting on page... ");
-	st = hrc::now();        // get start time point
+	st = hrc::now();
 	if (!socket.socket_connect(server)) {
 		printf("failed with %d\n", WSAGetLastError());
 		socket.socket_close();
@@ -125,7 +125,6 @@ void WebClient::decodeResponse(char* recvBuf, std::string host)
 	printf("\t  Verifying header... ");
 	printf("status code %d\n", response.statusCode);
 
-	// status code in 2xx format
 	if (response.statusCode >= 200 && response.statusCode <= 299) {
 		int contentSize = response.body.length();
 		printf("\t+ Parsing page... ");
