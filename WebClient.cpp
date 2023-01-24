@@ -1,3 +1,7 @@
+/*
+* CSCE 612 [Spring 2023]
+* by Isuranga Perera
+*/
 #include "WebClient.h"
 #include "UrlValidator.h"
 #include "HttpResponseParser.h"
