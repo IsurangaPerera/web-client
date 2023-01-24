@@ -120,27 +120,20 @@ void WebClient::decodeResponse(char* recvBuf, std::string host)
 	printf("\t  Verifying header... ");
 	printf("status code %d\n", response.statusCode);
 
-	if (response.statusCode >= 200 && response.statusCode <= 299) {
-		int contentSize = response.body.length();
+	if (response.statusCode >= 200 && response.statusCode < 300) {
 		printf("\t+ Parsing page... ");
 		st = hrc::now();
-		char* responseObjStr = new char[response.body.length() + 1];
-		strcpy_s(responseObjStr, response.body.length() + 1, response.body.c_str());
+		char* responseStr = new char[response.body.length() + 1];
+		strcpy_s(responseStr, response.body.length() + 1, response.body.c_str());
 
-		std::string baseUrl;
-		if (host.substr(0, 4).compare("www.") == 0) {
-			baseUrl = "http://" + host;
-		}
-		else {
-			baseUrl = "http://www." + host;
-		}
+		std::string baseUrl = "http://" + host;
 
 		char* baseUrlstr = new char[baseUrl.length() + 1];
 		strcpy_s(baseUrlstr, baseUrl.length() + 1, baseUrl.c_str());
 
 		int nLinks;
 		HTMLParserBase* p = new HTMLParserBase;
-		char* linkBuffer = p->Parse(responseObjStr, strlen(responseObjStr), baseUrlstr, (int)strlen(baseUrlstr), &nLinks);
+		char* linkBuffer = p->Parse(responseStr, strlen(responseStr), baseUrlstr, (int)strlen(baseUrlstr), &nLinks);
 
 		printf("done in %.2f ms with %d links\n\n", ELAPSED_MS(st, hrc::now()), nLinks < 0? 0 : nLinks);
 	}
