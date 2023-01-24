@@ -12,15 +12,15 @@ std::string getHost(std::string url) {
 	int host_pos = url.length();
 
 	size_t temp_pos = url.find_first_of(":");
-	if (temp_pos != 4294967295) {
+	if (temp_pos != std::string::npos) {
 		host_pos = temp_pos;
 	}
 	temp_pos = url.find_first_of("/");
-	if (temp_pos != 4294967295 && temp_pos < host_pos)
+	if (temp_pos != std::string::npos && temp_pos < host_pos)
 		host_pos = temp_pos;
 
 	temp_pos = url.find_first_of("?");
-	if (temp_pos != 4294967295 && temp_pos < host_pos)
+	if (temp_pos != std::string::npos && temp_pos < host_pos)
 		host_pos = temp_pos;
 
 	return url.substr(0, host_pos);
@@ -35,11 +35,11 @@ std::string getPort(std::string url) {
 		int port_last_pos = url.length();
 
 		int temp = url.find_first_of("/");
-		if (temp != 4294967295)
+		if (temp != std::string::npos)
 			port_last_pos = temp;
 
 		temp = url.find_first_of("?");
-		if (temp != 4294967295 && temp < port_last_pos)
+		if (temp != std::string::npos && temp < port_last_pos)
 			port_last_pos = temp;
 
 		port = url.substr(0, port_last_pos);
@@ -56,7 +56,7 @@ std::string getPath(std::string url) {
 		int path_pos = url.length();
 		int temp = url.find_first_of("?");
 
-		if (temp != 4294967295)
+		if (temp != std::string::npos)
 			path_pos = temp;
 		path += url.substr(0, path_pos);
 	}
@@ -91,14 +91,11 @@ UrlComponents UrlValidator::parseUrl(std::string url)
 	int port;
 	std::string scheme, host, path, query;
 
-	//trim
 	url = url.substr(url.find_first_not_of(' '),
 		(url.find_last_not_of(' ') - url.find_first_not_of(' ')) + 1);
 
-	//removing fragment
 	url = url.substr(0, url.rfind('#'));
 
-	/*scheme part*/
 	int scheme_last_pos = url.find("://");
 
 	if (scheme_last_pos == -1) {
@@ -150,3 +147,48 @@ UrlComponents UrlValidator::parseUrl(std::string url)
 
 	return urlComponents;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

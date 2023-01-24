@@ -8,21 +8,15 @@ constexpr auto MAX_DOWNLOAD_TIME = 10000;
 
 
 typedef struct response {
-	bool seen;
-	bool success;
+	bool success = false;
 	int contentSize;
-
-	response() {
-		seen = false;
-		success = false;
-	}
 }Response;
 
 class Socket {
-	SOCKET sock; // socket handle
-	char* buf; // current buffer
-	int allocatedSize; //bytes allocated for buf
-	int curPos; // extra stuff as needed
+	SOCKET sock;
+	char* buf;
+	int bufferSize;
+	int curPos;
 
 public:
 	Socket();

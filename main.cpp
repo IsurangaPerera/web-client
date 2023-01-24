@@ -16,7 +16,6 @@ int main(int argc, char** argv)
     WebClient client;
     WSADATA wsaData;
 
-    //Initialize WinSock; once per program run
     WORD wVersionRequested = MAKEWORD(2, 2);
     if (WSAStartup(wVersionRequested, &wsaData) != 0) {
         printf("WSAStartup error %d\n", WSAGetLastError());

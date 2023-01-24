@@ -9,7 +9,7 @@ std::mutex mutex_sock;
 Socket::Socket() 
 {
 	buf = (char*)malloc(INITIAL_BUFFER_SIZE);
-	allocatedSize = INITIAL_BUFFER_SIZE;
+	bufferSize = INITIAL_BUFFER_SIZE;
 	curPos = 0;
 }
 
@@ -18,8 +18,7 @@ bool Socket::socket_open(void)
 	sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (sock == INVALID_SOCKET)
 	{
-		std::cout << "Socket failed with error: " << WSAGetLastError() << std::endl;
-		//WSACleanup();
+		std::cout << "failed with error: " << WSAGetLastError() << std::endl;
 		return false;
 	}
 	return true;
@@ -63,7 +62,6 @@ Response Socket::socket_read(int maxDownloadSize)
 		elapsed = ELAPSED_MS(st, en);
 		if (elapsed > MAX_DOWNLOAD_TIME) {
 			std::cout << "failed with timeout" << std::endl;
-			response.seen = true;
 			response.success = false;
 			break;
 		}
@@ -73,7 +71,7 @@ Response Socket::socket_read(int maxDownloadSize)
 		int ret = select(0, &fds, NULL, NULL, &timeout);
 		if (ret > 0) 
 		{
-			int bytes = recv(sock, buf + curPos, allocatedSize - curPos, 0);
+			int bytes = recv(sock, buf + curPos, bufferSize - curPos, 0);
 
 			// error
 			if (bytes < 0) {
@@ -90,15 +88,14 @@ Response Socket::socket_read(int maxDownloadSize)
 
 			curPos += bytes;
 
-			if (allocatedSize - curPos < REMAINING_SPACE_THRESHOLD) {
+			if (bufferSize - curPos < REMAINING_SPACE_THRESHOLD) {
 				if (curPos >= maxDownloadSize) {
 					std::cout << "failed with exceeding max" << std::endl;
-					response.seen = true;
 					response.success = false;
 					break;
 				}
 
-				int modifiedBufferSize = allocatedSize << 1;
+				int modifiedBufferSize = bufferSize << 1;
 				char* tempBuf = (char*)realloc(buf, modifiedBufferSize);
 
 				if (tempBuf == NULL) {
@@ -107,7 +104,7 @@ Response Socket::socket_read(int maxDownloadSize)
 				}
 
 				buf = tempBuf;
-				allocatedSize = modifiedBufferSize;
+				bufferSize = modifiedBufferSize;
 			}
 
 		}
@@ -119,7 +116,6 @@ Response Socket::socket_read(int maxDownloadSize)
 		else 
 		{
 			std::cout << "failed with timeout" << std::endl;
-			response.seen = true;
 			response.success = false;
 			break;
 		}

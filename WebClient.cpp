@@ -67,7 +67,6 @@ void WebClient::crawl(std::string url)
 	}
 	printf("done in %.2f ms\n", ELAPSED_MS(st, hrc::now()));
 
-	// 1.0 request
 	std::string httpRequest = "GET " + request 
 		+ " HTTP/1.0\r\n" 
 		+ "Host: " + urlComponents.host + "\r\n" 
@@ -79,7 +78,6 @@ void WebClient::crawl(std::string url)
 	char* sendBuf = new char[requestLen + 1];
 	strcpy_s(sendBuf, requestLen + 1, httpRequest.c_str());
 
-	// send the request
 	printf("\t  Loading... ");
 	st = hrc::now();
 	if (!socket.socket_send(sendBuf, requestLen)) {
@@ -88,13 +86,10 @@ void WebClient::crawl(std::string url)
 		return;
 	}
 
-	// read from the socket
 	int maxDownloadSize = MB(200);
 	Response response = socket.socket_read(maxDownloadSize);
 	if (!response.success) {
-		if (!response.seen) {
-			printf("failed with %d on recv\n", WSAGetLastError());
-		}
+		printf("failed with %d on recv\n", WSAGetLastError());
 		socket.socket_close();
 		return;
 	}
@@ -129,7 +124,6 @@ void WebClient::decodeResponse(char* recvBuf, std::string host)
 		int contentSize = response.body.length();
 		printf("\t+ Parsing page... ");
 		st = hrc::now();
-		int nLinks;
 		char* responseObjStr = new char[response.body.length() + 1];
 		strcpy_s(responseObjStr, response.body.length() + 1, response.body.c_str());
 
@@ -144,6 +138,7 @@ void WebClient::decodeResponse(char* recvBuf, std::string host)
 		char* baseUrlstr = new char[baseUrl.length() + 1];
 		strcpy_s(baseUrlstr, baseUrl.length() + 1, baseUrl.c_str());
 
+		int nLinks;
 		HTMLParserBase* p = new HTMLParserBase;
 		char* linkBuffer = p->Parse(responseObjStr, strlen(responseObjStr), baseUrlstr, (int)strlen(baseUrlstr), &nLinks);
 
