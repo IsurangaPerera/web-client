@@ -28,7 +28,7 @@ typedef struct httpResponse {
 
 class HttpResponseParser
 {
-public:
-	HTTPResponse parse(std::string rawResponse);
+	public:
+		HTTPResponse parse(std::string rawResponse);
 };
 

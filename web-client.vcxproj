@@ -106,20 +106,27 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="HttpResponseParser.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="ThreadManager.cpp" />
     <ClCompile Include="UrlValidator.cpp" />
     <ClCompile Include="WebClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Commons.h" />
+    <ClInclude Include="FileUtils.h" />
     <ClInclude Include="HTMLParserBase.h" />
     <ClInclude Include="HttpResponseParser.h" />
     <ClInclude Include="Socket.h" />
+    <ClInclude Include="ThreadManager.h" />
     <ClInclude Include="UrlComponents.h" />
     <ClInclude Include="UrlValidator.h" />
     <ClInclude Include="WebClient.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -54,28 +54,28 @@ std::string getPort(std::string url) {
 
 std::string getPath(std::string url) {
 	std::string path = "/";
-	if (url.size() > 0 && url.at(0) == '/')
-	{
-		url = url.substr(1);
-		int path_pos = url.length();
-		int temp = url.find_first_of("?");
+	std::size_t found = url.find("/");
+	std::size_t queryIt = url.find("?");
+	int queryPos = (queryIt == std::string::npos) ? url.length() : queryIt;
+	if (found != std::string::npos) {
+		path = url.substr(found, queryPos);
+	}
 
-		if (temp != std::string::npos)
-			path_pos = temp;
-		path += url.substr(0, path_pos);
+	if (path.empty() || path.at(0) != '/') {
+		path = "/" + path;
 	}
 
 	return path;
 }
 
 std::string getQuery(std::string url) {
-	std::string query;
-	if (url.size() == 0 || url.at(0) != '?')
-		query = "";
-	else {
-		query = url.substr(1);
+	std::string query = "";
+	std::size_t found = url.find("?");
+	if (found != std::string::npos) {
+		if (found + 1 < url.length()) {
+			query = url.substr(found + 1);
+		}
 	}
-
 	return query;
 }
 
@@ -135,19 +135,14 @@ UrlComponents UrlValidator::parseUrl(std::string url)
 		return urlComponents;
 	}
 
-	path = getPath(url);
-
-	if (path.length() > 0)
-		url = getPatternSuffix(url, "/" + path);
-
 	query = getQuery(url);
+	path = getPath(url);
 
 	urlComponents.scheme = scheme;
 	urlComponents.host = host;
 	urlComponents.port = port;
 	urlComponents.path = path;
 	urlComponents.query = query;
-
 
 	return urlComponents;
 }

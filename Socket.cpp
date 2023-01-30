@@ -50,10 +50,10 @@ bool Socket::socket_send(char* sendBuf, int requestLen)
 Response Socket::socket_read(int maxDownloadSize)
 {
 	fd_set fds;
-
-	TIMEVAL timeout;
-	timeout.tv_sec = 10;
-	timeout.tv_usec = 0;
+	
+	TIMEVAL* timeout = new TIMEVAL;
+	timeout->tv_sec = 10;
+	timeout->tv_usec = 0;
 	Response response;
 
 	hrc::time_point st;
@@ -62,8 +62,7 @@ Response Socket::socket_read(int maxDownloadSize)
 	st = hrc::now();
 
 	while (true) {
-		en = hrc::now();
-		elapsed = ELAPSED_MS(st, en);
+		elapsed = ELAPSED_MS(st, hrc::now());
 		if (elapsed > MAX_DOWNLOAD_TIME) {
 			std::cout << "failed with timeout" << std::endl;
 			response.success = false;
@@ -72,7 +71,7 @@ Response Socket::socket_read(int maxDownloadSize)
 
 		FD_ZERO(&fds);
 		FD_SET(sock, &fds);
-		int ret = select(0, &fds, NULL, NULL, &timeout);
+		int ret = select(0, &fds, NULL, NULL, timeout);
 		if (ret > 0) 
 		{
 			int bytes = recv(sock, buf + curPos, bufferSize - curPos, 0);
@@ -124,7 +123,7 @@ Response Socket::socket_read(int maxDownloadSize)
 			break;
 		}
 	}
-
+	
 	return response;
 }
 
