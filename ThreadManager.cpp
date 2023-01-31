@@ -18,7 +18,8 @@ void ThreadManager::init(std::string content, int numThreads)
 		std::stringstream ss(line);
 		std::string trimmed_line;
 		ss >> trimmed_line;
+
 		WebClient client;
-		client.crawl(line, parser);
+		client.crawl(trimmed_line, parser);
 	}
 }

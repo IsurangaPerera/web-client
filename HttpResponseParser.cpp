@@ -18,7 +18,7 @@ HTTPResponse HttpResponseParser::parse(std::string rawResponse)
 		if (found != std::string::npos)
 			response.protocol = rawResponse.substr(0, found);
 		else
-			throw " failed with non-HTTP header (does not begin with HTTP/)";
+			throw " failed with non-HTTP header (does not begin with HTTP/)\n";
 
 		found = rawResponse.find(" ");
 		if ((found != std::string::npos) && (found + 3 < rawResponse.length()))

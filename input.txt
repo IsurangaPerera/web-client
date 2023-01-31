@@ -1,1 +1,9 @@
-http://atgma.org/
+http://www.dmoz.org
+http://128.194.135.72
+http://www.yahoo.com
+http://facebook.com:443?addrbook.php
+http://relay.tamu.edu:465/index.html
+http://128.194.135.25?viewcart.php/
+http://s22.irl.cs.tamu.edu:990/view?test=1
+http://ftp.gnu.org:21
+http://xyz.com:/

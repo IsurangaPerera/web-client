@@ -260,7 +260,7 @@ bool WebClient::process(std::string type, struct sockaddr_in server, std::string
 
 	Response response = socket.socket_read(maxDownloadSize);
 	if (!response.success) {
-		//printf("failed with %d on recv\n", WSAGetLastError());
+		printf("failed with %d on recv\n", WSAGetLastError());
 		socket.socket_close();
 		return false;
 	}
@@ -304,7 +304,7 @@ bool WebClient::process(std::string type, struct sockaddr_in server, std::string
 		HTMLParserBase* p = new HTMLParserBase;
 		char* linkBuffer = p->Parse(responseStr, strlen(responseStr), baseUrlstr, (int)strlen(baseUrlstr), &nLinks);
 
-		printf("done in %.2f ms with %d links\n\n", ELAPSED_MS(st, hrc::now()), nLinks < 0 ? 0 : nLinks);
+		printf("done in %.2f ms with %d links\n", ELAPSED_MS(st, hrc::now()), nLinks < 0 ? 0 : nLinks);
 	}
 
 	return false;
