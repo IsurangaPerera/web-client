@@ -40,7 +40,7 @@ bool Socket::socket_connect(struct sockaddr_in server)
 bool Socket::socket_send(char* sendBuf, int requestLen) 
 {
 	if (send(sock, sendBuf, requestLen, 0) == SOCKET_ERROR) {
-		std::cout << "Send error: " << WSAGetLastError() << std::endl;
+		//std::cout << "Send error: " << WSAGetLastError() << std::endl;
 		return false;
 	}
 
@@ -64,7 +64,7 @@ Response Socket::socket_read(int maxDownloadSize)
 	while (true) {
 		elapsed = ELAPSED_MS(st, hrc::now());
 		if (elapsed > MAX_DOWNLOAD_TIME) {
-			std::cout << "failed with timeout" << std::endl;
+			//std::cout << "failed with timeout" << std::endl;
 			response.success = false;
 			break;
 		}
@@ -94,7 +94,7 @@ Response Socket::socket_read(int maxDownloadSize)
 
 			if (bufferSize - curPos < REMAINING_SPACE_THRESHOLD) {
 				if (curPos >= maxDownloadSize) {
-					std::cout << "failed with exceeding max" << std::endl;
+					//std::cout << "failed with exceeding max" << std::endl;
 					response.success = false;
 					break;
 				}
@@ -103,10 +103,10 @@ Response Socket::socket_read(int maxDownloadSize)
 				char* tempBuf = (char*)realloc(buf, modifiedBufferSize);
 
 				if (tempBuf == NULL) {
-					std::cout << "ERROR: realloc failed to increase size of buffer" << std::endl;
+					//std::cout << "ERROR: realloc failed to increase size of buffer" << std::endl;
 					break;
 				}
-
+				//delete(buf);
 				buf = tempBuf;
 				bufferSize = modifiedBufferSize;
 			}
@@ -114,12 +114,12 @@ Response Socket::socket_read(int maxDownloadSize)
 		}
 		else if (ret == -1) 
 		{
-			std::cout << "Error: " << WSAGetLastError() << std::endl;
+			//std::cout << "Error: " << WSAGetLastError() << std::endl;
 			break;
 		}
 		else 
 		{
-			std::cout << "failed with timeout" << std::endl;
+			//std::cout << "failed with timeout" << std::endl;
 			response.success = false;
 			break;
 		}
