@@ -7,6 +7,9 @@
 #include "HttpResponseParser.h"
 #include "Socket.h"
 
+std::mutex mutex_host;
+std::mutex mutex_ip;
+
 std::unordered_set<DWORD> WebClient::seenIPs{};
 std::unordered_set<std::string> WebClient::seenHosts{};
 
@@ -402,12 +405,19 @@ bool WebClient::process(std::string type, struct sockaddr_in server, std::string
 
 std::pair<std::unordered_set<DWORD>::iterator, bool> WebClient::addIPtoSeen(DWORD ip)
 {
-	return seenIPs.insert(ip);
+	{
+		std::lock_guard<std::mutex> lck(mutex_ip);
+		return seenIPs.insert(ip);
+	}
 }
 
 std::pair<std::unordered_set<std::string>::iterator, bool>  WebClient::addHostToSeen(std::string host)
 {
-	return seenHosts.insert(host);
+	{
+		std::lock_guard<std::mutex> lck(mutex_host);
+		return seenHosts.insert(host);
+	}
+
 }
 
 std::string WebClient::buildHttpRequest(std::string httpMethod, std::string request, std::string host)
