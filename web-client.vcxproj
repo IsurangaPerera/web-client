@@ -110,6 +110,7 @@
     <ClCompile Include="HttpResponseParser.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="StatsManager.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
     <ClCompile Include="UrlValidator.cpp" />
     <ClCompile Include="WebClient.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="HTMLParserBase.h" />
     <ClInclude Include="HttpResponseParser.h" />
     <ClInclude Include="Socket.h" />
+    <ClInclude Include="StatsManager.h" />
     <ClInclude Include="ThreadManager.h" />
     <ClInclude Include="UrlComponents.h" />
     <ClInclude Include="UrlValidator.h" />
@@ -127,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
+    <Text Include="output.txt" />
+    <Text Include="\\Mac\Home\Downloads\input2.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

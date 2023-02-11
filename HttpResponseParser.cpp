@@ -5,9 +5,15 @@
 #include "Commons.h"
 #include "HttpResponseParser.h"
 
-HTTPResponse HttpResponseParser::parse(std::string rawResponse)
+HTTPResponse HttpResponseParser::parse(char* buf, int size)
 {
+	int i;
+	std::string rawResponse = "";
+	for (i = 0; i < size; i++)
+		rawResponse = rawResponse + buf[i];
+	
 	HTTPResponse response;
+	//printf("%s\n\n\n\n", rawResponse[4000]);
 
 	try
 	{
@@ -32,7 +38,7 @@ HTTPResponse HttpResponseParser::parse(std::string rawResponse)
 		else 
 			throw "Error: missing header";
 
-		found = response.header.find("transfer-encoding: chunked");
+		found = response.header.find("Transfer-Encoding: chunked");
 		if (found != std::string::npos) {
 			response.isChunked = true;
 		}
@@ -50,8 +56,9 @@ HTTPResponse HttpResponseParser::parse(std::string rawResponse)
 	}
 	catch (char* message)
 	{
-		std::cout << message;
+		//std::cout << message;
+		response.isValid = false;
 	}
-
+	
 	return response;
 }

@@ -89,7 +89,7 @@ std::string getPatternSuffix(std::string str, std::string pattern) {
 
 UrlComponents UrlValidator::parseUrl(std::string url) 
 {
-	printf("\t  Parsing URL... ");
+	// printf("\t  Parsing URL... ");
 	UrlComponents urlComponents;
 
 	int port;

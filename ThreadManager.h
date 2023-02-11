@@ -8,9 +8,8 @@
 
 class ThreadManager
 {
-	static std::queue<std::string> sharedQ;
-
 public:
+	static std::queue<std::string> sharedQ;
 	void init(std::string content, int numThreads);
 };
 

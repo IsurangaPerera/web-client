@@ -29,6 +29,6 @@ typedef struct httpResponse {
 class HttpResponseParser
 {
 	public:
-		HTTPResponse parse(std::string rawResponse);
+		HTTPResponse parse(char* buf, int size);
 };
 

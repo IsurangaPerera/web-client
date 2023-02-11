@@ -12,7 +12,7 @@
 int main(int argc, char** argv) 
 {
     if (argc < 2 || argc > 3) {
-        printf("Incorrect arguments. \nUsage: \n%s %s\n", argv[0], "<url>");
+        printf("Incorrect arguments. \nUsage: \n%s %s\nor\n%s <num_threads> <filename.txt>", argv[0], "<url>", argv[0]);
         return 0;
     }
         
@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 
     WORD wVersionRequested = MAKEWORD(2, 2);
     if (WSAStartup(wVersionRequested, &wsaData) != 0) {
-        printf("WSAStartup error %d\n", WSAGetLastError());
+        //printf("WSAStartup error %d\n", WSAGetLastError());
         WSACleanup();
         return 0;
     }
@@ -34,12 +34,9 @@ int main(int argc, char** argv)
         int numThreads;
         try {
             numThreads = stoi(numThreadsStr);
-            if (numThreads != 1) {
-                throw std::invalid_argument("Invalid thread count");
-            }
         }
         catch (std::invalid_argument& ex) {
-            printf("Incorrect arguments as number of threads should be 1. \nUsage: %s <num_threads> <filename.txt>\n", argv[0]);
+            printf("Incorrect arguments as number of threads should be greater than or equal to 1. \nUsage: %s <num_threads> <filename.txt>", argv[0]);
             WSACleanup();
             return 0;
         }

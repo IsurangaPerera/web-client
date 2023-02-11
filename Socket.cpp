@@ -22,7 +22,7 @@ bool Socket::socket_open(void)
 	sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (sock == INVALID_SOCKET)
 	{
-		std::cout << "failed with error: " << WSAGetLastError() << std::endl;
+		//std::cout << "failed with error: " << WSAGetLastError() << std::endl;
 		return false;
 	}
 	return true;
@@ -86,6 +86,7 @@ Response Socket::socket_read(int maxDownloadSize)
 				buf[curPos] = '\0';
 				response.success = true;
 				response.contentSize = curPos + 1;
+				//printf("%s\n", &buf[4000]);
 				return response;
 			}
 
@@ -123,7 +124,6 @@ Response Socket::socket_read(int maxDownloadSize)
 			break;
 		}
 	}
-	
 	return response;
 }
 

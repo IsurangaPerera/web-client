@@ -36,6 +36,9 @@
     <ClCompile Include="ThreadManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StatsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Commons.h">
@@ -65,8 +68,13 @@
     <ClInclude Include="ThreadManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StatsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
+    <Text Include="\\Mac\Home\Downloads\input2.txt" />
+    <Text Include="output.txt" />
   </ItemGroup>
 </Project>
