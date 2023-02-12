@@ -131,7 +131,6 @@ void showStats() {
 void ThreadManager::init(std::string content, int numThreads)
 {
 	std::istringstream contentStream(content);
-	HTMLParserBase* parser = new HTMLParserBase;
 	std::string line;
 	while (getline(contentStream, line)) {
 		if (line.empty())

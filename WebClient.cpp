@@ -339,11 +339,11 @@ bool WebClient::process(std::string type, struct sockaddr_in server, std::string
 
 		std::string baseUrl = "http://" + host;
 
-		char* baseUrlstr = new char[baseUrl.length() + 1];
-		strcpy_s(baseUrlstr, baseUrl.length() + 1, baseUrl.c_str());
+		//char* baseUrlstr = new char[baseUrl.length() + 1];
+		//strcpy_s(baseUrlstr, baseUrl.length() + 1, baseUrl.c_str());
 
 		int nLinks;
-		char* linkBuffer = p->Parse(&httpResponse.body[0], httpResponse.body.length() + 1, baseUrlstr, (int)strlen(baseUrlstr), &nLinks);
+		char* linkBuffer = p->Parse(&httpResponse.body[0], httpResponse.body.length() + 1, &baseUrl[0], baseUrl.length() + 1, &nLinks);
 
 		nLinks = nLinks < 0 ? 0 : nLinks;
 		statsManager.incrementLinksFound(nLinks);
@@ -358,6 +358,7 @@ bool WebClient::process(std::string type, struct sockaddr_in server, std::string
 
 			size_t found = linkHost.find("tamu.edu");
 			if (found != std::string::npos) {
+				std::cout << linkHost << std::endl << std::endl << std::endl;
 				statsManager.incrementNumLinksContainingTAMUAnywhere();
 			}
 
