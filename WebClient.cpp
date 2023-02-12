@@ -9,6 +9,7 @@
 
 std::mutex mutex_host;
 std::mutex mutex_ip;
+std::mutex mutex_print;
 
 std::unordered_set<DWORD> WebClient::seenIPs{};
 std::unordered_set<std::string> WebClient::seenHosts{};
@@ -248,7 +249,15 @@ void WebClient::crawl(std::string url, HTMLParserBase* parser, StatsManager& sta
 	std::string type = "robot";
 	if (!process(type, server, request, httpMethod, KB(16), urlComponents.host, statsManager, p)) {
 		statsManager.incrementRobotReqFail();
+		{
+			std::lock_guard<std::mutex> lck(mutex_print);
+			std::this_thread::sleep_for(std::chrono::milliseconds(2));
+		}
 		return;
+	}
+	{
+		std::lock_guard<std::mutex> lck(mutex_print);
+		std::this_thread::sleep_for(std::chrono::milliseconds(2));
 	}
 
 	statsManager.incrementURLsWhichPassedRobotCheck();

@@ -73,8 +73,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="input.txt" />
-    <Text Include="\\Mac\Home\Downloads\input2.txt" />
-    <Text Include="output.txt" />
+    <Text Include="traces.txt" />
   </ItemGroup>
 </Project>

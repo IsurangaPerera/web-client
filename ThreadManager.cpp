@@ -59,7 +59,7 @@ void showStats() {
 
 	while (true) {
 
-		this_thread::sleep_for(chrono::seconds(60));
+		this_thread::sleep_for(chrono::seconds(2));
 
 		// check if queue has become empty
 		// TODO put an event here
