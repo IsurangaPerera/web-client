@@ -6,7 +6,7 @@
 
 constexpr auto INITIAL_BUFFER_SIZE = 4096;
 constexpr auto REMAINING_SPACE_THRESHOLD = 1024;
-constexpr auto MAX_DOWNLOAD_TIME = 30000;
+constexpr auto MAX_DOWNLOAD_TIME = 10000;
 
 #include "Commons.h"
 

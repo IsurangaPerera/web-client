@@ -151,25 +151,13 @@ void WebClient::crawl(std::string url)
 	decodeResponse(recvBuf, urlComponents.host, response.contentSize);
 }
 
-char* toArray(std::string s)
-{
-	char* char_array = new char[s.length() + 1];
-
-	char_array[s.length()] = '\0';
-
-	for (int i = 0; i < s.length(); i++) {
-		char_array[i] = s[i];
-	}
-	return char_array;
-}
-
 void WebClient::decodeResponse(char* recvBuf, std::string host, int contentSize)
 {
 	hrc::time_point st;
 	hrc::time_point en;
 
 	HttpResponseParser parser;
-	HTTPResponse response = parser.parse(recvBuf, contentSize);
+	HTTPResponse response = parser.parse(std::string(reinterpret_cast<const char*>(recvBuf), contentSize));
 
 	if (!response.isValid) {
 		return;
@@ -196,7 +184,7 @@ void WebClient::decodeResponse(char* recvBuf, std::string host, int contentSize)
 
 		int nLinks;
 		HTMLParserBase* p = new HTMLParserBase;
-		char* linkBuffer = p->Parse(toArray(response.body), response.body.length(), baseUrlstr, (int)strlen(baseUrlstr), &nLinks);
+		char* linkBuffer = p->Parse(&response.body[0], response.body.length() + 1, baseUrlstr, (int)strlen(baseUrlstr), &nLinks);
 
 		printf("done in %.2f ms with %d links\n\n", ELAPSED_MS(st, hrc::now()), nLinks < 0? 0 : nLinks);
 	}
@@ -318,7 +306,7 @@ bool WebClient::process(std::string type, struct sockaddr_in server, std::string
 	socket.socket_close();
 	
 	HttpResponseParser parser;
-	HTTPResponse httpResponse = parser.parse(recvBuf, response.contentSize);
+	HTTPResponse httpResponse = parser.parse(std::string(reinterpret_cast<const char*>(recvBuf), response.contentSize));
 	if (!httpResponse.isValid) {
 		return false;
 	}
@@ -339,8 +327,6 @@ bool WebClient::process(std::string type, struct sockaddr_in server, std::string
 		statsManager.incrementNumCode2xx();
 
 		st = hrc::now();
-		
-		//char* responseStr = toArray(httpResponse.body);
 
 		std::string baseUrl = "http://" + host;
 
@@ -348,7 +334,7 @@ bool WebClient::process(std::string type, struct sockaddr_in server, std::string
 		strcpy_s(baseUrlstr, baseUrl.length() + 1, baseUrl.c_str());
 
 		int nLinks;
-		char* linkBuffer = p->Parse(toArray(httpResponse.body), httpResponse.body.length(), baseUrlstr, (int)strlen(baseUrlstr), &nLinks);
+		char* linkBuffer = p->Parse(&httpResponse.body[0], httpResponse.body.length() + 1, baseUrlstr, (int)strlen(baseUrlstr), &nLinks);
 
 		nLinks = nLinks < 0 ? 0 : nLinks;
 		statsManager.incrementLinksFound(nLinks);

@@ -5,16 +5,9 @@
 #include "Commons.h"
 #include "HttpResponseParser.h"
 
-HTTPResponse HttpResponseParser::parse(char* buf, int size)
-{
-	int i;
-	std::string rawResponse = "";
-	for (i = 0; i < size; i++)
-		rawResponse = rawResponse + buf[i];
-	
+HTTPResponse HttpResponseParser::parse(std::string rawResponse)
+{	
 	HTTPResponse response;
-	//printf("%s\n\n\n\n", rawResponse[4000]);
-
 	try
 	{
 		if (rawResponse.empty())
@@ -56,7 +49,6 @@ HTTPResponse HttpResponseParser::parse(char* buf, int size)
 	}
 	catch (char* message)
 	{
-		//std::cout << message;
 		response.isValid = false;
 	}
 	
