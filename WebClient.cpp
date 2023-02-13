@@ -358,7 +358,6 @@ bool WebClient::process(std::string type, struct sockaddr_in server, std::string
 
 			size_t found = linkHost.find("tamu.edu");
 			if (found != std::string::npos) {
-				std::cout << linkHost << std::endl << std::endl << std::endl;
 				statsManager.incrementNumLinksContainingTAMUAnywhere();
 			}
 
