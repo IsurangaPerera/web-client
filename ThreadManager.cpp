@@ -44,13 +44,10 @@ void showStats() {
 	hrc::time_point en;
 	hrc::time_point prevTime;
 
-	// how much time has elapsed (in seconds) since the last wakeup
 	double elapsedSinceLastWakeup;
-
-	// how much time has elapsed (in seconds) since the start 
 	int elapsedSinceStart;
 
-	st = hrc::now();        // get start time point
+	st = hrc::now();
 	prevTime = st;
 
 	int numPagesDownloadedPrev = 0;
@@ -61,8 +58,6 @@ void showStats() {
 
 		this_thread::sleep_for(chrono::seconds(2));
 
-		// check if queue has become empty
-		// TODO put an event here
 		if (ThreadManager::sharedQ.size() == 0) {
 			if (statsManager.q == 0 && allOver) {
 				break;
@@ -74,14 +69,12 @@ void showStats() {
 
 		int pagesDownloadedTillNow = int(statsManager.c);
 		int bytesDownloadedTillNow = int(statsManager.numRobotBytes) + int(statsManager.numPageBytes);
-		en = hrc::now();        // get end time point
-		elapsedSinceStart = (int)(ELAPSED_MS(st, en) / 1000); // in seconds
+		en = hrc::now();
+		elapsedSinceStart = (int)(ELAPSED_MS(st, en) / 1000);
 
-		elapsedSinceLastWakeup = ELAPSED_MS(prevTime, en) / 1000; // in seconds
+		elapsedSinceLastWakeup = ELAPSED_MS(prevTime, en) / 1000;
 		prevTime = en;
 
-		// std::cout << "HEEEE" << int(statsManager.r) << std::endl;
-		// printf("HEEE r %5d", int(statsManager.r));
 		printf("[%3d] %7d Q %6d E %7d H %6d D %6d I %5d R %5d C %5d L %4dK\n", elapsedSinceStart, int(statsManager.q), 
 			int(ThreadManager::sharedQ.size()), int(statsManager.e), int(statsManager.h), int(statsManager.d), int(statsManager.i), 
 			int(statsManager.r), int(statsManager.c), int(statsManager.l / 1000));
@@ -94,20 +87,14 @@ void showStats() {
 		numBytesDownloadedPrev = bytesDownloadedTillNow;
 		double bandwidthSinceLastWakeup = double((bytesDownloadedSinceLastWakeup * 8) / (1000000 * elapsedSinceLastWakeup));
 		printf("*** crawling %.1f pps @ %.1f Mbps\n", crawlSpeedSinceLastWakeup, bandwidthSinceLastWakeup);
-		//std::cout << "&&&&&&" << int(statsManager.i.load()) << std::endl;
-
 	}
-	en = hrc::now();        // get end time point
-	elapsedSinceStart = (int)(ELAPSED_MS(st, en) / 1000); // in seconds
+	en = hrc::now();
+	elapsedSinceStart = (int)(ELAPSED_MS(st, en) / 1000);
 	double rate = statsManager.e / elapsedSinceStart;
 	printf("\nExtracted %d URLs @ %d/s\n", int(statsManager.e), int(rate));
 
 	rate = int(statsManager.h) / elapsedSinceStart;
 	printf("Looked up %d DNS names @ %d/s\n", int(statsManager.h), int(rate));
-
-	// remove this
-	//printf("Duplicate hosts: %d\n", int(statsManager.duplicateHosts));
-	//printf("Number of failed Robot requests: %d\n", int(statsManager.numRobotReqFail));
 	
 	rate = int(statsManager.i) / elapsedSinceStart;
 	printf("Attempted %d site robots @ %d/s\n", int(statsManager.i), int(rate));
@@ -119,13 +106,12 @@ void showStats() {
 	rate = int(statsManager.l) / elapsedSinceStart;
 	printf("Parsed %d links @%d/s\n", int(statsManager.l), int(rate));
 
-	printf("HTTP codes: 2xx = %d, 3xx = %d, 4xx = %d, 5xx = %d, other = %d\n", int(statsManager.numCode2xx), int(statsManager.numCode3xx), int(statsManager.numCode4xx), int(statsManager.numCode5xx), int(statsManager.numCodeOther));
-
-	// Below part is for the report questions
-	printf("%d links point to a TAMU website. Out of these, %d originate from outside of TAMU\n", int(statsManager.numTAMUlinks), int(statsManager.numLinksFromOutsideTAMU));
-	printf("However, overall there were %d links which contained tamu.edu anywhere in them.\n", int(statsManager.numLinksContainingTAMUAnywhere));
-	printf("%d pages contain a link that points to a TAMU website. Out of these, %d originate from outside of TAMU\n", int(statsManager.numPagesContainingTamuLink), int(statsManager.numPagesFromOutsideTamu));
-
+	printf("HTTP codes: 2xx = %d, 3xx = %d, 4xx = %d, 5xx = %d, other = %d\n", 
+		int(statsManager.numCode2xx), 
+		int(statsManager.numCode3xx), 
+		int(statsManager.numCode4xx), 
+		int(statsManager.numCode5xx), 
+		int(statsManager.numCodeOther));
 }
 
 void ThreadManager::init(std::string content, int numThreads)

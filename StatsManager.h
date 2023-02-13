@@ -9,16 +9,6 @@ class StatsManager {
 
 
 public:
-	/*
-	Q: current size of the pending queue
-	E: number of extracted URLs from the queue
-	H: number of URLs that have passed host uniqueness
-	D: number of successful DNS lookups
-	I: number of URLs that have passed IP uniqueness
-	R: number of URLs that have passed robots checks
-	C: number of successfully crawled URLs (those with a valid HTTP code)
-	L: total links found
-	*/
 	std::atomic<int> q, e, h, d, i, r, c, l;
 	std::atomic<int> numRobotBytes, numPageBytes;
 	std::atomic<int> numCode2xx, numCode3xx, numCode4xx, numCode5xx, numCodeOther;
