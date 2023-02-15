@@ -128,6 +128,7 @@
     <ClInclude Include="WebClient.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="traces-1M.txt" />
     <Text Include="traces.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

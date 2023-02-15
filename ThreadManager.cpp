@@ -112,6 +112,8 @@ void showStats() {
 		int(statsManager.numCode4xx), 
 		int(statsManager.numCode5xx), 
 		int(statsManager.numCodeOther));
+
+	printf("%d pages contain a link that points to a TAMU website. Out of these, %d originate from outside of TAMU\n", int(statsManager.numPagesContainingTamuLink), int(statsManager.numPagesFromOutsideTamu));
 }
 
 void ThreadManager::init(std::string content, int numThreads)

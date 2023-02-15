@@ -74,5 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="traces.txt" />
+    <Text Include="traces-1M.txt" />
   </ItemGroup>
 </Project>
